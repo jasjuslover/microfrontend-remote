@@ -28,16 +28,18 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
-        test: /\.svg$/,
+        test: /.(png|jpg|woff|woff2|eot|ttf|svg|gif|ico)$/,
         use: [
-          '@svgr/webpack',
+          {
+            loader: "url-loader",
+            options: {
+              limit: 10000,
+              name: ".[ext]", //Path will be assets or image path
+            },
+          },
         ],
       },
     ],
@@ -63,6 +65,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
+      favicon: "./public/favicon.ico"
     }),
   ],
   resolve: {
